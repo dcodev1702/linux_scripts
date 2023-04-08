@@ -1,3 +1,5 @@
+# This feature requires PS >= 4.0
+#Requires -RunAsAdministrator
 
 # Reconnect Azure Arc Resource
 $resourceGroup = "CHANGE_ME_TO_YOUR_RG"
