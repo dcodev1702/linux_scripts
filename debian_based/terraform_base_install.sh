@@ -3,6 +3,7 @@
 AZ_REPO=$(lsb_release -cs)
 
 touch /home/lorenzo/.hushlogin &&
+chown lorenzo:lorenzo /home/lorenzo/.hushlogin &&
 sudo apt update && sudo apt upgrade -y &&
 sudo apt install -y \
 apt-transport-https \
