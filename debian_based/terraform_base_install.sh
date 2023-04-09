@@ -19,20 +19,20 @@ python3-pip &&
 curl -sSL https://raw.githubusercontent.com/docker/docker-install/master/install.sh | sudo bash &&
 sudo usermod -aG docker lorenzo &&
 curl -sSL https://raw.githubusercontent.com/dcodev1702/install_docker/main/install_docker-compose.sh | sudo bash &&
+
+
+# Install PowerShell and Azure Modules
 wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb" &&
 sudo dpkg -i packages-microsoft-prod.deb &&
 rm packages-microsoft-prod.deb &&
 sudo apt-get update &&
 
-# Install PowerShell and Azure Modules
 if [ ! $(command -v pwsh) ]; then
     sudo apt-get install -y powershell
 fi &&
 
 sudo pwsh -c 'if (-not (Get-Module -Name Az -ListAvailable)) { Install-Module -Name Az -Scope AllUsers -Force }' &&
 sudo pwsh -c 'if (-not (Get-Module -Name Az.ConnectedMachine -ListAvailable)) { Install-Module -Name Az.ConnectedMachine -Scope AllUsers -Force }' &&
-#sudo pwsh -c Install-Module Az -Scope AllUsers -Force &&
-#sudo pwsh -c Install-Module Az.ConnectedMachine -Scope AllUsers -Force &&
 
 # Install Azure CLI
 sudo mkdir -p /etc/apt/keyrings &&
