@@ -2,7 +2,7 @@
 
 AZ_REPO=$(lsb_release -cs)
 
-touch ~/lorenzo/.hushlogin &&
+touch /home/lorenzo/.hushlogin &&
 sudo apt update && sudo apt upgrade -y &&
 sudo apt install -y \
 apt-transport-https \
@@ -25,9 +25,14 @@ rm packages-microsoft-prod.deb &&
 sudo apt-get update &&
 
 # Install PowerShell and Azure Modules
-sudo apt-get install -y powershell &&
-sudo pwsh -c Install-Module Az -Scope AllUsers -Force &&
-sudo pwsh -c Install-Module Az.ConnectedMachine -Scope AllUsers -Force &&
+if [ ! $(command -v pwsh) ]; then
+    sudo apt-get install -y powershell
+fi &&
+
+sudo pwsh -c 'if (-not (Get-Module -Name Az -ListAvailable)) { Install-Module -Name Az -Scope AllUsers -Force }' &&
+sudo pwsh -c 'if (-not (Get-Module -Name Az.ConnectedMachine -ListAvailable)) { Install-Module -Name Az.ConnectedMachine -Scope AllUsers -Force }' &&
+#sudo pwsh -c Install-Module Az -Scope AllUsers -Force &&
+#sudo pwsh -c Install-Module Az.ConnectedMachine -Scope AllUsers -Force &&
 
 # Install Azure CLI
 sudo mkdir -p /etc/apt/keyrings &&
