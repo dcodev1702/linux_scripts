@@ -6,14 +6,13 @@ from socket import gethostname
 from typing import Final
 
 
-# This is a hard coded value for Azure native Linux VM's 
+# This is a hard coded value for Azure native Linux VM's
 # Found this on Google somewhere, it's been very helpful!
 AZURE_VM_CHASSIS_TAG = '7783-7084-3265-9085-8269-3286-77'
-HOSTNAME: Final[str] = socket.gethostname()
+HOSTNAME: Final[str] = gethostname()
 
 def system_check():
 
-    
     try:
         if(subprocess.run(['which', 'dmidecode'], check=True, stdout=subprocess.DEVNULL)):
 
@@ -22,10 +21,10 @@ def system_check():
             VM_CHASSIS_TAG = subprocess.run(['sudo', 'dmidecode', '--string', 'chassis-asset-tag'], stdout=subprocess.PIPE, universal_newlines=True).stdout.strip()
 
             if VM_CHASSIS_TAG == AZURE_VM_CHASSIS_TAG:
-                print(f"{HOSTNAME} is located in Azure! -> Chassis Tag: {VM_CHASSIS_TAG}")
+                print(f"Host:[{HOSTNAME}] is located in Azure! -> Chassis Tag: {VM_CHASSIS_TAG}")
                 return True
             else:
-                print(f"{HOSTNAME} NOT in Azure -> Chassis Tag: {VM_CHASSIS_TAG}")
+                print(f"Host:[{HOSTNAME}] is NOT an Azure resource (VM) -> Chassis Tag: {VM_CHASSIS_TAG}")
                 return False
 
     except subprocess.CalledProcessError:
@@ -34,9 +33,9 @@ def system_check():
 
 
 def main():
-    print(f"Checking if {HOSTNAME} is running on Azure.")
+    print(f"Checking if Host:[{HOSTNAME}] is an Azure resource (VM).")
     system_check()
 
 
 if __name__ == "__main__":
-    main()
+   main()
