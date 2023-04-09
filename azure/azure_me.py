@@ -28,7 +28,8 @@ def system_check():
     try:
         if(subprocess.run(['which', 'dmidecode'], check=True, stdout=subprocess.DEVNULL)):
 
-            VM_CHASSIS_TAG = subprocess.run(['sudo', 'dmidecode', '--string', 'chassis-asset-tag'], stdout=subprocess.PIPE, universal_newlines=True).stdout.strip()
+            VM_CHASSIS_TAG = subprocess.run(['sudo', 'dmidecode', '--string', 'chassis-asset-tag'], \
+                             stdout=subprocess.PIPE, universal_newlines=True).stdout.strip()
 
             if VM_CHASSIS_TAG == AZURE_VM_CHASSIS_TAG:
                 print(f"Host:[{HOSTNAME}] is located in Azure! -> Chassis Tag: {VM_CHASSIS_TAG}")
