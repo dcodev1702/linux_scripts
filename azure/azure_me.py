@@ -1,5 +1,17 @@
 #!/usr/bin/python3
 
+'''
+Author: DCO Dev 1702
+Date: 2 March 2023
+
+Purpose:
+--------
+This logic is used in a larger script for Azure Monitor Agent to determine if the resource (VM)
+is running in Azure.  If true, do NOT use tcpdump as the binary is not permitted on Azure.
+Otherise, call tcpdump to sniff traffic for CEF messages.  This logic is used in the 
+AMA_Troubleshooting.py script when screening for CEF messages to send to Log Analytics.
+
+'''
 import subprocess
 from sys import exit
 from socket import gethostname
